@@ -51,6 +51,8 @@ public class SeekBehaviour : SteeringBehaviour
 
         //If we havent yet reached the target do the main logic of finding the interest directions
         Vector2 directionToTarget = (targetPositionCached - (Vector2)transform.position);
+        directionToTarget = RotateVectorByAngle(directionToTarget,90);
+
         for (int i = 0; i < interest.Length; i++)
         {
             float result = Vector2.Dot(directionToTarget.normalized, Directions.eightDirections[i]);
@@ -69,7 +71,16 @@ public class SeekBehaviour : SteeringBehaviour
         interestsTemp = interest;
         return (danger, interest);
     }
+    Vector2 RotateVectorByAngle(Vector2 vector, float angle)
+    {
+        // Tính toán quaternion từ góc độ xoay
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
+        // Sử dụng phương thức Rotate() để xoay vector
+        Vector2 rotatedVector = rotation * vector;
+
+        return rotatedVector;
+    }
     private void OnDrawGizmos()
     {
 
